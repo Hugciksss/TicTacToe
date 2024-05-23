@@ -18,6 +18,7 @@ def checkWinner():
         btn1["text"]=="X"and btn5["text"]=="X"and btn9["text"]=="X" or
         btn3["text"]=="X"and btn5["text"]=="X"and btn7["text"]=="X"):
         winner=True
+        disableButtons()
         messagebox.showinfo("TicTacToe", "Spēlētājs x ir uzvarētājs")
     elif (btn1["text"]=="O"and btn2["text"]=="O"and btn3["text"]=="O" or
         btn4["text"]=="O"and btn5["text"]=="O"and btn6["text"]=="O" or
@@ -28,9 +29,11 @@ def checkWinner():
         btn1["text"]=="O"and btn5["text"]=="O"and btn9["text"]=="O" or
         btn3["text"]=="O"and btn5["text"]=="O"and btn7["text"]=="O"):
         winner=True
+        disableButtons()
         messagebox.showinfo("TicTacToe", "Spēlētājs O ir uzvarētājs")
     elif count==9:
         winner=False
+        disableButtons()
         messagebox.showinfo("TicTacToc", "Neizšķirts")
 
 def btnClick(button):#padod visu pogu
@@ -49,6 +52,37 @@ def btnClick(button):#padod visu pogu
         messagebox.showerror("TicTacToe","Šeit ir kāds ieklikšķinājis!")
     checkWinner()
 
+def disableButtons():
+    btn1.config(state=DISABLED)
+    btn2.config(state=DISABLED)
+    btn3.config(state=DISABLED)
+    btn4.config(state=DISABLED)
+    btn5.config(state=DISABLED)
+    btn6.config(state=DISABLED)
+    btn7.config(state=DISABLED)
+    btn8.config(state=DISABLED)
+    btn9.config(state=DISABLED)
+
+def reset():#atjauno pogas
+    btn1.config(state=NORMAL)
+    btn2.config(state=NORMAL)
+    btn3.config(state=NORMAL)
+    btn4.config(state=NORMAL)
+    btn5.config(state=NORMAL)
+    btn6.config(state=NORMAL)
+    btn7.config(state=NORMAL)
+    btn8.config(state=NORMAL)
+    btn9.config(state=NORMAL)
+    btn1["text"]=' '
+    btn2["text"]=' '
+    btn3["text"]=' '
+    btn4["text"]=' '
+    btn5["text"]=' '
+    btn6["text"]=' '
+    btn7["text"]=' '
+    btn8["text"]=' '
+    btn9["text"]=' '
+
 
 
 
@@ -62,6 +96,8 @@ btn7=Button(mansLogs,text=' ',width=6,height=3,bd=10,font=('Black'),bg= 'red', c
 btn8=Button(mansLogs,text=' ',width=6,height=3,bd=10,font=('Black'),bg= 'red', command=lambda:btnClick(btn8))
 btn9=Button(mansLogs,text=' ',width=6,height=3,bd=10,font=('Black'),bg= 'red', command=lambda:btnClick(btn9))
 
+
+
 btn1.grid(row=1,column=0)
 btn2.grid(row=1,column=1)
 btn3.grid(row=1,column=2)
@@ -72,10 +108,16 @@ btn7.grid(row=3,column=0)
 btn8.grid(row=3,column=1)
 btn9.grid(row=3,column=2)
 
+#Lielā izvēlne
+galvenaIzvelne=Menu(mansLogs)#izveido galveno izvēli
+mansLogs.config(menu=galvenaIzvelne)#pievieno galvenajam, logam
+#mazā iuzvelene
+opcijas=Menu(galvenaIzvelne,tearoff=False)#mazā izvēlne
+galvenaIzvelne.add_cascade(label="Opcijas",menu=opcijas)
 
-
-
-
+#komandas
+opcijas.add_command(label="Jauna spēle",command=reset)
+opcijas.add_command(label="Iziet",command=mansLogs.quit)
 
 
 mansLogs.mainloop()
